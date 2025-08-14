@@ -1,3 +1,4 @@
 streamlit
 letterboxdpy
 requests
+lxml==4.6.2
