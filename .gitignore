@@ -1,26 +1,3 @@
-# Byte-compiled / optimized / DLL files
 __pycache__/
-*.py[cod]
-*$py.class
-
-# Virtual environments
-venv/
+*.pyc
 .venv/
-
-# OS files
-.DS_Store
-Thumbs.db
-
-# Python environment files
-*.env
-.env.*
-
-# Streamlit specific
-.streamlit/
-
-# Logs
-*.log
-
-# Backup / temp files
-*.bak
-*.swp
