@@ -3,6 +3,8 @@ from letterboxdpy.watchlist import Watchlist
 from letterboxdpy.movie import Movie
 import streamlit as st
 
+st.set_page_config(layout="wide")
+
 
 def get_watchlist(username: str):
     return Watchlist(username).get_movies()
@@ -40,8 +42,6 @@ st.markdown("""
 }
 </style>
 """, unsafe_allow_html=True)
-
-st.set_page_config(layout="wide")
 
 st.title("letterboxd watchlist overlap tool")
 
@@ -97,4 +97,3 @@ if st.button("find overlap"):
 
         else:
             st.info("no common movies found :(")
-
