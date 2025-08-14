@@ -6,6 +6,7 @@ import streamlit as st
 st.set_page_config(layout="wide")
 
 
+@st.cache_data
 def get_watchlist(username: str):
     return Watchlist(username).get_movies()
 
@@ -54,33 +55,34 @@ if st.button("find overlap"):
     if len(usernames) < 2:
         st.error("at least two usernames, please")
     else:
-        st.info("fetching watchlists...")
         progress_text = st.empty()
         progress_bar = st.progress(0)
-        watchlists = [get_watchlist(u) for u in usernames]
+        with st.spinner("fetching watchlists..."):
+            watchlists = [get_watchlist(u) for u in usernames]
 
-        overlap = set.intersection(*(set(w.keys()) for w in watchlists))
+        overlap = sorted(set.intersection(*(set(w.keys()) for w in watchlists)))
 
         if overlap:
             st.subheader("movies on all watchlists:")
             st.text("click on a poster to go to its letterboxd page")
             progress_text.text("displaying movies...")
             progress_bar.progress(0)
-            cols = st.columns(7)
+            cols_per_row = min(7, len(overlap))
+            cols = st.columns(cols_per_row)
             num_overlap = len(overlap)
             for i, idx in enumerate(overlap, start=0):
                 movie = Movie(watchlists[0][idx]["slug"])
-                col = cols[i % 7]
+                col = cols[i % cols_per_row]
                 col.markdown(
                     f"""
-                        <div class="movie-card">
-                            <a href="https://letterboxd.com/film/{movie.slug}/" target="_blank">
-                                <img src="{movie.poster}" class="movie-poster">
-                            </a>
-                            <span class="movie-title">{movie.title}</span>
-                            <span class="movie-year">({movie.year})</span>
-                        </div>
-                        """,
+                    <div class="movie-card">
+                        <a href="https://letterboxd.com/film/{movie.slug}/" target="_blank">
+                            <img src="{movie.poster}" class="movie-poster">
+                        </a>
+                        <span class="movie-title">{movie.title}</span>
+                        <span class="movie-year">({movie.year})</span>
+                    </div>
+                    """,
                     unsafe_allow_html=True
                 )
 
