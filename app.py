@@ -44,6 +44,7 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("letterboxd watchlist overlap tool")
+st.text("by ish444n")
 
 usernameStr = st.text_input("enter public letterboxd usernames (comma-separated)",
                             placeholder="username1, username2, etc")
