@@ -1,0 +1,2 @@
+streamlit~=1.48.1
+letterboxdpy~=5.1.1
