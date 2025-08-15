@@ -45,9 +45,9 @@ st.markdown("""
 """, unsafe_allow_html=True)
 
 st.title("letterboxd watchlist overlap tool")
-st.text("by ish444n")
+st.subheader("by ishaan")
 
-usernameStr = st.text_input("enter public letterboxd usernames (comma-separated)",
+usernameStr = st.text_input("enter public letterboxd usernames (comma-separated). watchlists must be public",
                             placeholder="username1, username2, etc")
 
 if st.button("find overlap"):
