@@ -47,56 +47,58 @@ st.markdown("""
 st.title("letterboxd watchlist overlap tool")
 st.subheader("by ishaan")
 
-usernameStr = st.text_input("enter public letterboxd usernames (comma-separated). watchlists must be public",
-                            placeholder="username1, username2, etc")
+st.text("currently down, sorry! ishaan will fix it soon hopefully")
 
-if st.button("find overlap"):
-    usernames = [u.strip() for u in usernameStr.split(",")]
-    if len(usernames) < 2:
-        st.error("at least two usernames, please")
-    else:
-        progress_text = st.empty()
-        progress_bar = st.progress(0)
-        with st.spinner("fetching watchlists..."):
-            watchlists = [get_watchlist(u) for u in usernames]
-
-        overlap = sorted(set.intersection(*(set(w.keys()) for w in watchlists)))
-
-        if overlap:
-            st.subheader("movies on all watchlists:")
-            st.text("click on a poster to go to its letterboxd page")
-            progress_text.text("displaying movies...")
-            progress_bar.progress(0)
-            cols_per_row = min(7, len(overlap))
-            cols = st.columns(cols_per_row)
-            num_overlap = len(overlap)
-            for i, idx in enumerate(overlap, start=0):
-                movie = Movie(watchlists[0][idx]["slug"])
-                col = cols[i % cols_per_row]
-                col.markdown(
-                    f"""
-                    <div class="movie-card">
-                        <a href="https://letterboxd.com/film/{movie.slug}/" target="_blank">
-                            <img src="{movie.poster}" class="movie-poster">
-                        </a>
-                        <span class="movie-title">{movie.title}</span>
-                        <span class="movie-year">({movie.year})</span>
-                    </div>
-                    """,
-                    unsafe_allow_html=True
-                )
-
-                if num_overlap > 1:
-                    progress = i / (num_overlap - 1)
-                    progress_bar.progress(progress)
-                    progress_text.text(f"{int(progress * 100)}% — {movie.title}")
-                else:
-                    percent = 100
-                    progress_bar.progress(1.0)
-                    progress_text.text(f"100% — {movie.title}")
-
-            progress_bar.progress(1.0)
-            progress_text.text("all movies displayed :)")
-
-        else:
-            st.info("no common movies found :(")
+# usernameStr = st.text_input("enter public letterboxd usernames (comma-separated). wishlists must be public",
+#                             placeholder="username1, username2, etc")
+#
+# if st.button("find overlap"):
+#     usernames = [u.strip() for u in usernameStr.split(",")]
+#     if len(usernames) < 2:
+#         st.error("at least two usernames, please")
+#     else:
+#         progress_text = st.empty()
+#         progress_bar = st.progress(0)
+#         with st.spinner("fetching watchlists..."):
+#             watchlists = [get_watchlist(u) for u in usernames]
+#
+#         overlap = sorted(set.intersection(*(set(w.keys()) for w in watchlists)))
+#
+#         if overlap:
+#             st.subheader("movies on all watchlists:")
+#             st.text("click on a poster to go to its letterboxd page")
+#             progress_text.text("displaying movies...")
+#             progress_bar.progress(0)
+#             cols_per_row = min(7, len(overlap))
+#             cols = st.columns(cols_per_row)
+#             num_overlap = len(overlap)
+#             for i, idx in enumerate(overlap, start=0):
+#                 movie = Movie(watchlists[0][idx]["slug"])
+#                 col = cols[i % cols_per_row]
+#                 col.markdown(
+#                     f"""
+#                     <div class="movie-card">
+#                         <a href="https://letterboxd.com/film/{movie.slug}/" target="_blank">
+#                             <img src="{movie.poster}" class="movie-poster">
+#                         </a>
+#                         <span class="movie-title">{movie.title}</span>
+#                         <span class="movie-year">({movie.year})</span>
+#                     </div>
+#                     """,
+#                     unsafe_allow_html=True
+#                 )
+#
+#                 if num_overlap > 1:
+#                     progress = i / (num_overlap - 1)
+#                     progress_bar.progress(progress)
+#                     progress_text.text(f"{int(progress * 100)}% — {movie.title}")
+#                 else:
+#                     percent = 100
+#                     progress_bar.progress(1.0)
+#                     progress_text.text(f"100% — {movie.title}")
+#
+#             progress_bar.progress(1.0)
+#             progress_text.text("all movies displayed :)")
+#
+#         else:
+#             st.info("no common movies found :(")
